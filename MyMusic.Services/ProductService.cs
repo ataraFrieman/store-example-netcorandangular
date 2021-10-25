@@ -48,5 +48,15 @@ namespace MyMusic.Services
             await _unitOfWork.CommitAsync();
             return productToBeUpdated;
         }
+
+        public async Task<IEnumerable<ProductBrand>> GetProductBrandsAsync()
+        {
+            return await _unitOfWork.Products.GetProductBrandsAsync();
+        }
+
+        public async Task<IEnumerable<ProductType>> GetProductTypesAsync()
+        {
+            return await _unitOfWork.Products.GetProductTypesAsync();
+        }
     }
 }

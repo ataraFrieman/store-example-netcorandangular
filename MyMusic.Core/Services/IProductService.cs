@@ -14,5 +14,8 @@ namespace MyMusic.Core.Services
         Task DeleteProductAsync(Product product);
         Task<Product> UpdateProductAsync(Product productToBeUpdated, Product product);
 
+        Task<IEnumerable<ProductBrand>> GetProductBrandsAsync();
+        Task<IEnumerable<ProductType>> GetProductTypesAsync();
+
     }
 }

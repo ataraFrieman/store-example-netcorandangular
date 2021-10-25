@@ -1,3 +1,4 @@
+using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using MyMusic.Core.Models;
 using MyMusic.Data.Configurations;
@@ -9,6 +10,9 @@ namespace MyMusic.Data
         public DbSet<Music> Musics { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ProductType> ProductTypes { get; set; }
+        public DbSet<ProductBrand> ProductBrands { get; set; }
+
 
 
         public MyMusicDbContext(DbContextOptions<MyMusicDbContext> options)
@@ -17,14 +21,8 @@ namespace MyMusic.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder
-                .ApplyConfiguration(new MusicConfiguration());
-
-            builder
-                .ApplyConfiguration(new ArtistConfiguration());
-
-            builder
-                .ApplyConfiguration(new ProductConfiguration());
+            base.OnModelCreating(builder);
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

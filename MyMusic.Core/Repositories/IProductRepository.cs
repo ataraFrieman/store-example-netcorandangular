@@ -10,5 +10,8 @@ namespace MyMusic.Core.Repositories
     {
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<Product> GetProductByIdAsync(int id);
+        Task<IEnumerable<ProductBrand>> GetProductBrandsAsync();
+        Task<IEnumerable<ProductType>> GetProductTypesAsync();
+
     }
 }
