@@ -13,6 +13,8 @@ namespace MyMusic.Core.Specifications
         {
             AddInclude(x => x.ProductBrand);
             AddInclude(x => x.ProductType);
+            // AddInclude("ProductType");//for thenInclude
+
         }
 
         public ProductsWithBrandsAndtypesSpecifications(Expression<Func<Product, bool>> q ) : base(q)
