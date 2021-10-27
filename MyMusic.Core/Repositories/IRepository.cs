@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using MyMusic.Core.Models;
+using MyMusic.Core.Specifications;
 
 namespace MyMusic.Core.Repositories
 {
-    public interface IRepository<TEntity> where TEntity : class
+    public interface IRepository<TEntity> where TEntity : EntityBase
     {
         ValueTask<TEntity> GetByIdAsync(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
@@ -15,5 +17,10 @@ namespace MyMusic.Core.Repositories
         Task AddRangeAsync(IEnumerable<TEntity> entities);
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);
+
+        Task<TEntity> GetEntityWithSpec(ISpecification<TEntity> spec);
+        Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> spec);
+
+
     }
 }

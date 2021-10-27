@@ -4,11 +4,14 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using MyMusic.Core.Models;
 using MyMusic.Core.Repositories;
+using MyMusic.Core.Specifications;
+using MyMusic.Data.Specifications;
 
 namespace MyMusic.Data.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : EntityBase
     {
         protected readonly DbContext Context;
 
@@ -56,6 +59,19 @@ namespace MyMusic.Data.Repositories
             return Context.Set<TEntity>().SingleOrDefaultAsync(predicate);
         }
 
+        public async Task<TEntity> GetEntityWithSpec(ISpecification<TEntity> spec)
+        {
+            return await ApplySpesification(spec).FirstOrDefaultAsync();
+        }
 
+        public async Task<IEnumerable<TEntity>> ListAsync(ISpecification<TEntity> spec)
+        {
+            return await ApplySpesification(spec).ToListAsync();
+        }
+
+        private IQueryable<TEntity> ApplySpesification(ISpecification<TEntity> spec)
+        {
+            return SpecificationElValueator<TEntity>.GetQuery(Context.Set<TEntity>().AsQueryable(), spec);
+        }
     }
 }

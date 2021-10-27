@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MyMusic.Core;
 using MyMusic.Core.Models;
 using MyMusic.Core.Services;
+using MyMusic.Core.Specifications;
 
 namespace MyMusic.Services
 {
@@ -20,12 +21,15 @@ namespace MyMusic.Services
 
         public async Task<IEnumerable<Product>> GetAllProductsAsync()
         {
-            return await _unitOfWork.Products.GetAllProductsAsync();
+            var spec = new ProductsWithBrandsAndtypesSpecifications();
+            return await _unitOfWork.Products.ListAsync(spec);
         }
 
         public async Task<Product> GetProductByIdAsync(int id)
         {
-            return await _unitOfWork.Products.GetProductByIdAsync(id);
+            var spec = new ProductsWithBrandsAndtypesSpecifications(x=>x.Id == id);
+
+            return await _unitOfWork.Products.GetEntityWithSpec(spec);
         }
 
 
